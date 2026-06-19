@@ -19,7 +19,7 @@ const State = {
 /* ==========================================
    NÚMERO DO WHATSAPP DA LOJA
    ========================================== */
-const WHATSAPP_LOJA = '5519996937305';
+const API_PEDIDOS_URL = '/api/pedidos';
 
 /* ==========================================
    EMOJIS por produto (fallback visual)
@@ -338,7 +338,7 @@ function initModal() {
 
   document.getElementById('form-pedido')?.addEventListener('submit', e => {
     e.preventDefault();
-    if (validarFormulario()) enviarPedidoWhatsApp();
+    if (validarFormulario()) enviarPedidoBackend(e.submitter);
   });
 }
 
@@ -434,6 +434,59 @@ _Pedido realizado pelo site Amoruda Cookies_`;
   Carrinho.render();
   Carrinho.atualizarContador();
   document.getElementById('form-pedido')?.reset();
+}
+
+/* Envia o pedido para o backend */
+async function enviarPedidoBackend(botaoSubmit) {
+  const nome    = document.getElementById('inp-nome')?.value.trim();
+  const tel     = document.getElementById('inp-tel')?.value.trim();
+  const end     = document.getElementById('inp-end')?.value.trim();
+  const bairro  = document.getElementById('inp-bairro')?.value.trim();
+  const cidade  = document.getElementById('inp-cidade')?.value.trim();
+  const obs     = document.getElementById('inp-obs')?.value.trim();
+
+  const payload = {
+    cliente: { nome, telefone: tel },
+    entrega: { endereco: end, bairro, cidade, observacoes: obs || '' },
+    itens: State.carrinho.map(item => ({
+      produtoId: String(item.id),
+      nome: item.nome,
+      quantidade: item.qtd,
+      precoUnitario: item.preco,
+    })),
+  };
+
+  const textoOriginal = botaoSubmit?.textContent;
+  if (botaoSubmit) {
+    botaoSubmit.disabled = true;
+    botaoSubmit.textContent = 'Enviando pedido...';
+  }
+
+  try {
+    const resp = await fetch(API_PEDIDOS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    const dados = await resp.json().catch(() => ({}));
+    if (!resp.ok) throw new Error(dados.erro || 'Nao foi possivel registrar o pedido.');
+
+    fecharModal();
+    showToast(`Pedido recebido! Codigo ${dados.codigo}.`, 'success', 5000);
+
+    State.carrinho = [];
+    Carrinho.render();
+    Carrinho.atualizarContador();
+    document.getElementById('form-pedido')?.reset();
+  } catch (err) {
+    showToast(err.message || 'Nao foi possivel enviar o pedido agora.', 'error', 5000);
+  } finally {
+    if (botaoSubmit) {
+      botaoSubmit.disabled = false;
+      botaoSubmit.textContent = textoOriginal;
+    }
+  }
 }
 
 /* ==========================================

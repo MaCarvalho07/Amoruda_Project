@@ -62,7 +62,7 @@ function initLogin() {
 
 function entrarPainel() {
   document.getElementById('tela-login').style.display  = 'none';
-  document.getElementById('painel-admin').style.display = 'grid';
+  document.getElementById('painel-admin').style.display = 'block';
   Admin.logado = true;
   carregarDados();
   renderAbaAtual();

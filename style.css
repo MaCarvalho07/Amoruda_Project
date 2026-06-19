@@ -1,32 +1,32 @@
 /* =============================================
    AMORUDA COOKIES – style.css
-   Paleta: Chocolate, Bege, Creme, Caramelo
+   Paleta: Amoruda
    ============================================= */
 
 /* === CUSTOM PROPERTIES === */
 :root {
-  --choco-dark:    #2d1a0e;
-  --choco:         #4a2c17;
-  --choco-medium:  #6b3f22;
-  --caramel:       #c47a3a;
-  --caramel-light: #e09c5a;
-  --cream:         #fdf8f3;
-  --cream-warm:    #f5ede0;
-  --bege:          #e8d5b7;
-  --bege-dark:     #d4b896;
+  --choco-dark:    #610e07;
+  --choco:         #610e07;
+  --choco-medium:  #8a2b22;
+  --caramel:       #e08880;
+  --caramel-light: #f0aaa4;
+  --cream:         #fffdf2;
+  --cream-warm:    #f8eee4;
+  --bege:          #ead0ca;
+  --bege-dark:     #d5aaa3;
   --white:         #ffffff;
-  --text-dark:     #1a0e07;
-  --text-medium:   #4a3020;
-  --text-light:    #7a5c40;
-  --text-muted:    #a08060;
+  --text-dark:     #220806;
+  --text-medium:   #5b211b;
+  --text-light:    #7e514c;
+  --text-muted:    #9a746f;
   --success:       #2e7d32;
   --error:         #c62828;
   --warning:       #e65100;
 
-  --shadow-sm:  0 2px 8px rgba(45,26,14,.10);
-  --shadow-md:  0 4px 20px rgba(45,26,14,.14);
-  --shadow-lg:  0 8px 40px rgba(45,26,14,.18);
-  --shadow-xl:  0 16px 60px rgba(45,26,14,.22);
+  --shadow-sm:  0 2px 8px rgba(97,14,7,.10);
+  --shadow-md:  0 4px 20px rgba(97,14,7,.14);
+  --shadow-lg:  0 8px 40px rgba(97,14,7,.18);
+  --shadow-xl:  0 16px 60px rgba(97,14,7,.22);
 
   --radius-sm:  6px;
   --radius-md:  12px;
@@ -151,12 +151,12 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .btn-primary {
   background: var(--choco);
   color: var(--cream);
-  box-shadow: 0 3px 12px rgba(74,44,23,.3);
+  box-shadow: 0 3px 12px rgba(97,14,7,.28);
 }
 .btn-primary:hover {
   background: var(--choco-dark);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(74,44,23,.35);
+  box-shadow: 0 6px 20px rgba(97,14,7,.34);
 }
 
 .btn-outline {
@@ -180,7 +180,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   background: rgba(253,248,243,.95);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(196,122,58,.15);
+  border-bottom: 1px solid rgba(224,136,128,.22);
   z-index: 1000;
   transition: box-shadow var(--transition), background var(--transition);
 }
@@ -324,9 +324,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 .hero-badge {
   display: inline-block;
-  background: rgba(196,122,58,.2);
+  background: rgba(224,136,128,.2);
   color: var(--caramel-light);
-  border: 1px solid rgba(196,122,58,.3);
+  border: 1px solid rgba(224,136,128,.35);
   padding: .35rem 1rem;
   border-radius: var(--radius-pill);
   font-size: .8rem;
@@ -400,8 +400,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 .cookie-card-mini {
   position: absolute;
-  background: rgba(196,122,58,.15);
-  border: 1px solid rgba(196,122,58,.3);
+  background: rgba(224,136,128,.16);
+  border: 1px solid rgba(224,136,128,.34);
   border-radius: var(--radius-md);
   padding: .75rem;
   text-align: center;
@@ -783,9 +783,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .sobre-img-placeholder span:first-child { font-size: 5rem; }
 .sobre-img-placeholder p { color: var(--bege); font-size: 1.1rem; font-weight: 600; font-family: var(--font-display); }
 .sobre-img-tag {
-  background: rgba(196,122,58,.25);
+  background: rgba(224,136,128,.25);
   color: var(--caramel-light);
-  border: 1px solid rgba(196,122,58,.4);
+  border: 1px solid rgba(224,136,128,.4);
   padding: .3rem .8rem;
   border-radius: var(--radius-pill);
   font-size: .75rem;
@@ -1114,7 +1114,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .form-group input:focus,
 .form-group textarea:focus {
   border-color: var(--caramel);
-  box-shadow: 0 0 0 3px rgba(196,122,58,.15);
+  box-shadow: 0 0 0 3px rgba(224,136,128,.18);
 }
 .form-group input.invalid,
 .form-group textarea.invalid {
