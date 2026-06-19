@@ -19,7 +19,7 @@ const State = {
 /* ==========================================
    NÚMERO DO WHATSAPP DA LOJA
    ========================================== */
-const API_PEDIDOS_URL = '/api/pedidos';
+const WHATSAPP_LOJA = '5519992596442';
 
 /* ==========================================
    EMOJIS por produto (fallback visual)
@@ -338,7 +338,7 @@ function initModal() {
 
   document.getElementById('form-pedido')?.addEventListener('submit', e => {
     e.preventDefault();
-    if (validarFormulario()) enviarPedidoBackend(e.submitter);
+    if (validarFormulario()) enviarPedidoWhatsApp();
   });
 }
 
@@ -406,22 +406,21 @@ function enviarPedidoWhatsApp() {
 
   const total = moeda(Carrinho.total());
 
-  const msg = `🍪 *PEDIDO AMORUDA COOKIES* 🍪
+  const msg = ` PEDIDO AMORUDA COOKIES
 
-👤 *Cliente:* ${nome}
-📱 *WhatsApp:* ${tel}
+Cliente: ${nome}
+WhatsApp: ${tel}
 
-📦 *Itens do Pedido:*
+Itens do Pedido:
 ${linhasProdutos}
-💰 *Total: ${total}*
+Total: ${total}
 
-🏠 *Endereço de Entrega:*
-${end}
+Endereço de Entrega: ${end}
 Bairro: ${bairro}
 Cidade: ${cidade}
 
-${obs ? `📝 *Observações:*\n${obs}\n` : ''}
-_Pedido realizado pelo site Amoruda Cookies_`;
+${obs ? `Observações:\n${obs}\n` : ''}
+Pedido realizado pelo site Amoruda Cookies`;
 
   const url = `https://wa.me/${WHATSAPP_LOJA}?text=${encodeURIComponent(msg)}`;
   window.open(url, '_blank', 'noopener');
@@ -434,59 +433,6 @@ _Pedido realizado pelo site Amoruda Cookies_`;
   Carrinho.render();
   Carrinho.atualizarContador();
   document.getElementById('form-pedido')?.reset();
-}
-
-/* Envia o pedido para o backend */
-async function enviarPedidoBackend(botaoSubmit) {
-  const nome    = document.getElementById('inp-nome')?.value.trim();
-  const tel     = document.getElementById('inp-tel')?.value.trim();
-  const end     = document.getElementById('inp-end')?.value.trim();
-  const bairro  = document.getElementById('inp-bairro')?.value.trim();
-  const cidade  = document.getElementById('inp-cidade')?.value.trim();
-  const obs     = document.getElementById('inp-obs')?.value.trim();
-
-  const payload = {
-    cliente: { nome, telefone: tel },
-    entrega: { endereco: end, bairro, cidade, observacoes: obs || '' },
-    itens: State.carrinho.map(item => ({
-      produtoId: String(item.id),
-      nome: item.nome,
-      quantidade: item.qtd,
-      precoUnitario: item.preco,
-    })),
-  };
-
-  const textoOriginal = botaoSubmit?.textContent;
-  if (botaoSubmit) {
-    botaoSubmit.disabled = true;
-    botaoSubmit.textContent = 'Enviando pedido...';
-  }
-
-  try {
-    const resp = await fetch(API_PEDIDOS_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-
-    const dados = await resp.json().catch(() => ({}));
-    if (!resp.ok) throw new Error(dados.erro || 'Nao foi possivel registrar o pedido.');
-
-    fecharModal();
-    showToast(`Pedido recebido! Codigo ${dados.codigo}.`, 'success', 5000);
-
-    State.carrinho = [];
-    Carrinho.render();
-    Carrinho.atualizarContador();
-    document.getElementById('form-pedido')?.reset();
-  } catch (err) {
-    showToast(err.message || 'Nao foi possivel enviar o pedido agora.', 'error', 5000);
-  } finally {
-    if (botaoSubmit) {
-      botaoSubmit.disabled = false;
-      botaoSubmit.textContent = textoOriginal;
-    }
-  }
 }
 
 /* ==========================================
@@ -525,7 +471,7 @@ function criarCardProduto(prod, idx) {
   const esgotado = prod.estoque === 0;
 
   let classeEstoque = 'estoque-ok';
-  let textoEstoque  = ` ${prod.estoque} disponíveis`;
+  let textoEstoque  = `✅ ${prod.estoque} disponíveis`;
   if (prod.estoque === 0) { classeEstoque = 'estoque-zero'; textoEstoque = '❌ Esgotado'; }
   else if (prod.estoque <= 5) { classeEstoque = 'estoque-baixo'; textoEstoque = `⚠️ Últimas ${prod.estoque} unidades`; }
 
@@ -544,7 +490,7 @@ function criarCardProduto(prod, idx) {
       <h3 class="produto-nome">${prod.nome}</h3>
       <p class="produto-descricao">${prod.descricao}</p>
       <div class="produto-ingredientes">
-        <strong> Ingredientes:</strong>
+        <strong>🌾 Ingredientes:</strong>
         ${prod.ingredientes}
       </div>
       <span class="produto-estoque ${classeEstoque}">${textoEstoque}</span>
