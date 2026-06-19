@@ -1,0 +1,66 @@
+[
+  {
+    "id": 1,
+    "nome": "Mariana Costa",
+    "nota": 5,
+    "comentario": "Meu Deus, o Cookie Nutella Trufado é um pecado! Comprei pra experimentar e já fiz meu segundo pedido. A embalagem chegou linda e os cookies são perfeitos. A Amoruda conquistou meu coração!",
+    "data": "2024-12-10",
+    "produto": "Cookie Nutella Trufado"
+  },
+  {
+    "id": 2,
+    "nome": "Rafael Mendes",
+    "nota": 5,
+    "comentario": "Sou suspeito pra falar porque já virei cliente fiel. Os cookies chegam sempre no ponto certo, crocantes por fora e macios por dentro. O Red Velvet então é de outro mundo. Recomendo de olhos fechados!",
+    "data": "2024-12-08",
+    "produto": "Cookie Red Velvet"
+  },
+  {
+    "id": 3,
+    "nome": "Juliana Ferreira",
+    "nota": 5,
+    "comentario": "Pedi para o aniversário da minha filha e foi um sucesso absoluto! As crianças amaram e os adultos pediram o contato da loja. Entrega rápida, embalagem caprichada e sabor incrível. Obrigada, Amoruda!",
+    "data": "2024-12-05",
+    "produto": "Caixa Sortida"
+  },
+  {
+    "id": 4,
+    "nome": "Pedro Alves",
+    "nota": 5,
+    "comentario": "O Cookie Churros é simplesmente inacreditável. Aquela mistura de canela com doce de leite me fez viajar para a infância. Já indiquei para todo mundo do escritório e todos adoraram!",
+    "data": "2024-12-03",
+    "produto": "Cookie Churros"
+  },
+  {
+    "id": 5,
+    "nome": "Camila Santos",
+    "nota": 5,
+    "comentario": "Descobri a Amoruda pelo Instagram e não me arrependo nem um pouquinho! Os cookies são artesanais de verdade, dá pra sentir o cuidado em cada detalhe. O de Limão Siciliano é delicado e perfeito para o verão.",
+    "data": "2024-11-28",
+    "produto": "Cookie Limão Siciliano"
+  },
+  {
+    "id": 6,
+    "nome": "Lucas Barbosa",
+    "nota": 4,
+    "comentario": "Cookies deliciosos, atendimento rápido pelo WhatsApp e entrega pontual. O único motivo do 4 estrelas é porque quero que vocês lancem mais sabores! O de amendoim é viciante demais.",
+    "data": "2024-11-25",
+    "produto": "Cookie Manteiga de Amendoim"
+  },
+  {
+    "id": 7,
+    "nome": "Ana Lima",
+    "nota": 5,
+    "comentario": "Fiz um pedido corporativo para uma reunião de clientes e todos elogiaram muito! Os cookies chegaram perfeitamente embalados com o nome dos convidados. Super recomendo para presentes empresariais!",
+    "data": "2024-11-20",
+    "produto": "Pedido Corporativo"
+  },
+  {
+    "id": 8,
+    "nome": "Thiago Rocha",
+    "nota": 5,
+    "comentario": "O S'mores é simplesmente o melhor cookie que já comi na vida. O marshmallow tostado com aquele chocolate... parece mágica. Já pedi três vezes e sempre que abre a caixa, a família inteira aparece na cozinha!",
+    "data": "2024-11-15",
+    "produto": "Cookie S'mores"
+  }
+]

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Amoruda – Cookies artesanais feitos com amor. Peça pelo WhatsApp e receba em casa." />
+  <title>Amoruda – Cookies Artesanais</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍪</text></svg>" />
+</head>
+<body>
+
+  <!-- ===== LOADING SCREEN ===== -->
+  <div id="loading-screen" class="loading-screen">
+    <div class="loading-content">
+      <div class="loading-cookie">🍪</div>
+      <p class="loading-text">Preparando os cookies com amor...</p>
+      <div class="loading-bar"><div class="loading-progress"></div></div>
+    </div>
+  </div>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header" id="header">
+    <div class="container header-inner">
+
+      <a href="#inicio" class="logo" aria-label="Amoruda – página inicial">
+        <span class="logo-icon">🍪</span>
+        <span class="logo-text">Amoruda</span>
+      </a>
+
+      <nav class="nav" id="nav" aria-label="Navegação principal">
+        <ul class="nav-list">
+          <li><a href="#inicio" class="nav-link">Início</a></li>
+          <li><a href="#produtos" class="nav-link">Produtos</a></li>
+          <li><a href="#galeria" class="nav-link">Galeria</a></li>
+          <li><a href="#avaliacoes" class="nav-link">Avaliações</a></li>
+          <li><a href="#sobre" class="nav-link">Sobre</a></li>
+          <li><a href="#contato" class="nav-link">Contato</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="cart-btn" id="cart-btn" aria-label="Abrir carrinho de compras">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <span class="cart-count" id="cart-count" aria-live="polite">0</span>
+        </button>
+        <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="inicio">
+    <div class="hero-bg-shapes" aria-hidden="true">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+    </div>
+    <div class="container hero-inner">
+      <div class="hero-content animate-in">
+        <span class="hero-badge">✨ Feito com amor, assado na hora</span>
+        <h1 class="hero-title">Cookies Artesanais<br><em>que derretem o coração</em></h1>
+        <p class="hero-subtitle">Ingredientes selecionados, receitas exclusivas e um cuidado especial em cada detalhe. Porque você merece o melhor.</p>
+        <div class="hero-cta">
+          <a href="#produtos" class="btn btn-primary">Ver Produtos</a>
+          <a href="https://wa.me/5519999999999" class="btn btn-outline" target="_blank" rel="noopener">Fazer Pedido 🍪</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><strong>500+</strong><span>pedidos entregues</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat"><strong>8</strong><span>sabores exclusivos</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat"><strong>100%</strong><span>artesanal</span></div>
+        </div>
+      </div>
+      <div class="hero-visual animate-in-right" aria-hidden="true">
+        <div class="cookie-showcase">
+          <div class="cookie-card-main">
+            <div class="cookie-emoji-big">🍪</div>
+            <p>Cookie Chocolate Belga</p>
+            <span>R$ 8,00</span>
+          </div>
+          <div class="cookie-card-mini top-right">
+            <div class="cookie-emoji-sm">🍪</div>
+            <p>Nutella Trufado</p>
+          </div>
+          <div class="cookie-card-mini bottom-left">
+            <div class="cookie-emoji-sm">🍪</div>
+            <p>Red Velvet</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-wave" aria-hidden="true">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#fdf8f3"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ===== PRODUTOS ===== -->
+  <section class="section" id="produtos">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Nossos Sabores</span>
+        <h2 class="section-title">Escolha o seu favorito</h2>
+        <p class="section-subtitle">Cada cookie é uma obra de arte. Montamos seu pedido e entregamos fresquinho pra você.</p>
+      </div>
+
+      <div class="produtos-filtros">
+        <button class="filtro-btn active" data-categoria="todos">Todos</button>
+        <button class="filtro-btn" data-categoria="classico">Clássicos</button>
+        <button class="filtro-btn" data-categoria="especial">Especiais</button>
+        <button class="filtro-btn" data-categoria="premium">Premium</button>
+      </div>
+
+      <div class="produtos-grid" id="produtos-grid">
+        <!-- Produtos injetados via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GALERIA ===== -->
+  <section class="section section-alt" id="galeria">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Galeria</span>
+        <h2 class="section-title">Cookie em cada ângulo</h2>
+        <p class="section-subtitle">Porque um cookie bonito já é metade do prazer.</p>
+      </div>
+      <div class="galeria-grid" id="galeria-grid">
+        <div class="galeria-item galeria-large" data-index="0">
+          <div class="galeria-placeholder">
+            <span class="galeria-emoji">🍪</span>
+            <p>Cookie Chocolate Belga</p>
+          </div>
+        </div>
+        <div class="galeria-item" data-index="1">
+          <div class="galeria-placeholder">
+            <span class="galeria-emoji">🍫</span>
+            <p>Red Velvet</p>
+          </div>
+        </div>
+        <div class="galeria-item" data-index="2">
+          <div class="galeria-placeholder">
+            <span class="galeria-emoji">🥜</span>
+            <p>Amendoim</p>
+          </div>
+        </div>
+        <div class="galeria-item galeria-tall" data-index="3">
+          <div class="galeria-placeholder">
+            <span class="galeria-emoji">✨</span>
+            <p>Nutella Trufado</p>
+          </div>
+        </div>
+        <div class="galeria-item" data-index="4">
+          <div class="galeria-placeholder">
+            <span class="galeria-emoji">🍋</span>
+            <p>Limão Siciliano</p>
+          </div>
+        </div>
+        <div class="galeria-item" data-index="5">
+          <div class="galeria-placeholder">
+            <span class="galeria-emoji">🖤</span>
+            <p>Oreo</p>
+          </div>
+        </div>
+        <div class="galeria-item galeria-wide" data-index="6">
+          <div class="galeria-placeholder">
+            <span class="galeria-emoji">🎪</span>
+            <p>Caixa Sortida</p>
+          </div>
+        </div>
+        <div class="galeria-item" data-index="7">
+          <div class="galeria-placeholder">
+            <span class="galeria-emoji">🔥</span>
+            <p>S'mores</p>
+          </div>
+        </div>
+        <div class="galeria-item" data-index="8">
+          <div class="galeria-placeholder">
+            <span class="galeria-emoji">🌿</span>
+            <p>Churros</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== AVALIAÇÕES ===== -->
+  <section class="section" id="avaliacoes">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Depoimentos</span>
+        <h2 class="section-title">O que dizem nossos clientes</h2>
+        <p class="section-subtitle">A melhor receita é feita de amor – e as avaliações provam isso.</p>
+      </div>
+      <div class="avaliacoes-grid" id="avaliacoes-grid">
+        <!-- Avaliações injetadas via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SOBRE ===== -->
+  <section class="section section-alt" id="sobre">
+    <div class="container">
+      <div class="sobre-inner">
+        <div class="sobre-visual animate-on-scroll">
+          <div class="sobre-img-wrapper">
+            <div class="sobre-img-placeholder">
+              <span>👩‍🍳</span>
+              <p>Carol Amoruda</p>
+              <span class="sobre-img-tag">Confeiteira & Fundadora</span>
+            </div>
+          </div>
+          <div class="sobre-badge-float">
+            <strong>+3 anos</strong>
+            <span>de amor em cada cookie</span>
+          </div>
+        </div>
+        <div class="sobre-content animate-on-scroll">
+          <span class="section-badge">Nossa História</span>
+          <h2 class="section-title left">Nascida na cozinha,<br>criada com amor</h2>
+          <p>A <strong>Amoruda</strong> começou em 2021, quando Carol decidiu transformar sua paixão por confeitaria em um negócio real. O que era um hobby virou uma missão: criar cookies artesanais que fossem verdadeiramente especiais.</p>
+          <p>Cada receita passou por dezenas de testes. Cada ingrediente foi escolhido a dedo. Cada cookie que sai do forno recebe atenção e carinho antes de chegar até você.</p>
+
+          <div class="sobre-valores">
+            <div class="valor-item">
+              <span class="valor-icon">🌾</span>
+              <div>
+                <strong>Ingredientes Selecionados</strong>
+                <p>Só o que é bom, fresco e de qualidade entra na nossa massa.</p>
+              </div>
+            </div>
+            <div class="valor-item">
+              <span class="valor-icon">❤️</span>
+              <div>
+                <strong>Feito com Amor</strong>
+                <p>Cada unidade é assada na hora do pedido, sem pressa.</p>
+              </div>
+            </div>
+            <div class="valor-item">
+              <span class="valor-icon">🎁</span>
+              <div>
+                <strong>Embalagem Especial</strong>
+                <p>Presenteie com estilo. Nossas embalagens são uma obra à parte.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTATO ===== -->
+  <section class="section" id="contato">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Fale Conosco</span>
+        <h2 class="section-title">Vamos conversar?</h2>
+        <p class="section-subtitle">Estamos sempre prontos para receber seu pedido e tirar todas as dúvidas.</p>
+      </div>
+      <div class="contato-grid">
+        <div class="contato-card">
+          <div class="contato-icon">💬</div>
+          <h3>WhatsApp</h3>
+          <p>O jeito mais rápido de fazer seu pedido ou tirar dúvidas.</p>
+          <a href="https://wa.me/5519999999999" class="btn btn-primary" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+        </div>
+        <div class="contato-card">
+          <div class="contato-icon">📸</div>
+          <h3>Instagram</h3>
+          <p>Siga e fique por dentro das novidades e sabores especiais.</p>
+          <a href="https://instagram.com/amoruda.cookies" class="btn btn-outline" target="_blank" rel="noopener">@amoruda.cookies</a>
+        </div>
+        <div class="contato-card">
+          <div class="contato-icon">📍</div>
+          <h3>Localização</h3>
+          <p>Piracicaba – SP<br>Entregamos em toda a cidade!</p>
+          <div class="horario">
+            <strong>Horários</strong>
+            <span>Seg–Sex: 9h às 18h</span>
+            <span>Sáb: 9h às 14h</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="#inicio" class="logo logo-light">
+          <span class="logo-icon">🍪</span>
+          <span class="logo-text">Amoruda</span>
+        </a>
+        <p>Cookies artesanais feitos com amor e ingredientes selecionados. Cada mordida é uma experiência única.</p>
+        <div class="footer-social">
+          <a href="https://wa.me/5519999999999" aria-label="WhatsApp da Amoruda" target="_blank" rel="noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+          <a href="https://instagram.com/amoruda.cookies" aria-label="Instagram da Amoruda" target="_blank" rel="noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>Links Rápidos</h4>
+        <ul>
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#produtos">Produtos</a></li>
+          <li><a href="#galeria">Galeria</a></li>
+          <li><a href="#avaliacoes">Avaliações</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Sabores</h4>
+        <ul>
+          <li><a href="#produtos">Chocolate Belga</a></li>
+          <li><a href="#produtos">Red Velvet</a></li>
+          <li><a href="#produtos">Nutella Trufado</a></li>
+          <li><a href="#produtos">Churros</a></li>
+          <li><a href="#produtos">S'mores</a></li>
+          <li><a href="admin.html">Área Admin</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>© <span id="ano-atual"></span> Amoruda Cookies Artesanais. Todos os direitos reservados. Feito com ❤️ em Piracicaba–SP.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== CARRINHO SIDEBAR ===== -->
+  <div class="cart-overlay" id="cart-overlay" aria-hidden="true"></div>
+  <aside class="cart-sidebar" id="cart-sidebar" aria-label="Carrinho de compras" aria-hidden="true">
+    <div class="cart-header">
+      <h2>🛒 Meu Pedido</h2>
+      <button class="cart-close" id="cart-close" aria-label="Fechar carrinho">✕</button>
+    </div>
+    <div class="cart-body" id="cart-body">
+      <div class="cart-empty" id="cart-empty">
+        <span>🍪</span>
+        <p>Seu carrinho está vazio.<br>Adicione algum cookie!</p>
+      </div>
+      <ul class="cart-list" id="cart-list" aria-label="Itens no carrinho"></ul>
+    </div>
+    <div class="cart-footer" id="cart-footer" style="display:none">
+      <div class="cart-totals">
+        <div class="cart-subtotal">
+          <span>Subtotal</span><span id="cart-subtotal">R$ 0,00</span>
+        </div>
+        <div class="cart-total-row">
+          <span>Total</span><span id="cart-total">R$ 0,00</span>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-full" id="btn-finalizar">Finalizar Pedido via WhatsApp 💬</button>
+    </div>
+  </aside>
+
+  <!-- ===== MODAL PEDIDO ===== -->
+  <div class="modal-overlay" id="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 id="modal-title">📝 Dados para Entrega</h2>
+        <button class="modal-close" id="modal-close" aria-label="Fechar formulário">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="form-pedido" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="inp-nome">Nome completo *</label>
+              <input type="text" id="inp-nome" name="nome" placeholder="Seu nome" autocomplete="name" required />
+              <span class="form-error" id="err-nome"></span>
+            </div>
+            <div class="form-group">
+              <label for="inp-tel">WhatsApp *</label>
+              <input type="tel" id="inp-tel" name="telefone" placeholder="(00) 00000-0000" autocomplete="tel" required />
+              <span class="form-error" id="err-tel"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inp-end">Endereço (rua e número) *</label>
+            <input type="text" id="inp-end" name="endereco" placeholder="Rua das Flores, 123" autocomplete="street-address" required />
+            <span class="form-error" id="err-end"></span>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="inp-bairro">Bairro *</label>
+              <input type="text" id="inp-bairro" name="bairro" placeholder="Centro" required />
+              <span class="form-error" id="err-bairro"></span>
+            </div>
+            <div class="form-group">
+              <label for="inp-cidade">Cidade *</label>
+              <input type="text" id="inp-cidade" name="cidade" placeholder="Piracicaba" required />
+              <span class="form-error" id="err-cidade"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inp-obs">Observações</label>
+            <textarea id="inp-obs" name="observacoes" rows="3" placeholder="Algum detalhe especial? Embalagem para presente? Alergias?"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Enviar Pedido pelo WhatsApp 🚀</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== LIGHTBOX ===== -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Visualizador de imagem">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Fechar lightbox">✕</button>
+    <button class="lightbox-prev" id="lightbox-prev" aria-label="Imagem anterior">‹</button>
+    <div class="lightbox-content" id="lightbox-content"></div>
+    <button class="lightbox-next" id="lightbox-next" aria-label="Próxima imagem">›</button>
+  </div>
+
+  <!-- ===== TOAST ===== -->
+  <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- ===== FABs ===== -->
+  <a href="https://wa.me/5519999999999" class="fab fab-whatsapp" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <button class="fab fab-top" id="back-to-top" aria-label="Voltar ao topo" style="display:none">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>
