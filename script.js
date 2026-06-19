@@ -525,7 +525,7 @@ function criarCardProduto(prod, idx) {
   const esgotado = prod.estoque === 0;
 
   let classeEstoque = 'estoque-ok';
-  let textoEstoque  = `✅ ${prod.estoque} disponíveis`;
+  let textoEstoque  = ` ${prod.estoque} disponíveis`;
   if (prod.estoque === 0) { classeEstoque = 'estoque-zero'; textoEstoque = '❌ Esgotado'; }
   else if (prod.estoque <= 5) { classeEstoque = 'estoque-baixo'; textoEstoque = `⚠️ Últimas ${prod.estoque} unidades`; }
 
@@ -544,7 +544,7 @@ function criarCardProduto(prod, idx) {
       <h3 class="produto-nome">${prod.nome}</h3>
       <p class="produto-descricao">${prod.descricao}</p>
       <div class="produto-ingredientes">
-        <strong>🌾 Ingredientes:</strong>
+        <strong> Ingredientes:</strong>
         ${prod.ingredientes}
       </div>
       <span class="produto-estoque ${classeEstoque}">${textoEstoque}</span>
