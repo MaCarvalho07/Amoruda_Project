@@ -620,18 +620,6 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .produto-ingredientes strong { color: var(--text-medium); display: block; margin-bottom: .15rem; }
 
-.produto-estoque {
-  font-size: .75rem;
-  font-weight: 600;
-  padding: .25rem .6rem;
-  border-radius: var(--radius-pill);
-  display: inline-block;
-  margin-bottom: .75rem;
-}
-.estoque-ok    { background: #e8f5e9; color: #2e7d32; }
-.estoque-baixo { background: #fff3e0; color: #e65100; }
-.estoque-zero  { background: #ffebee; color: #c62828; }
-
 .produto-footer {
   padding: .75rem 1.25rem 1.25rem;
   display: flex;
@@ -1029,6 +1017,63 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .cart-subtotal { color: var(--text-light); font-size: .9rem; border-bottom: 1px dashed var(--bege); margin-bottom: .5rem; }
 .cart-total-row { font-size: 1.1rem; font-weight: 700; color: var(--choco); }
+
+.cart-delivery-choice {
+  margin-bottom: 1rem;
+}
+.cart-delivery-label {
+  font-size: .85rem;
+  font-weight: 700;
+  color: var(--text-medium);
+  margin-bottom: .55rem;
+  display: block;
+}
+.cart-delivery-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .75rem;
+}
+.delivery-option {
+  border: 1px solid var(--bege);
+  background: var(--white);
+  color: var(--choco);
+  border-radius: var(--radius-md);
+  padding: .8rem .9rem;
+  font-size: .92rem;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.delivery-option.active,
+.delivery-option:hover {
+  background: var(--cream-warm);
+  border-color: var(--caramel);
+}
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: .65rem;
+}
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  font-size: .95rem;
+  color: var(--text-dark);
+}
+.radio-label input {
+  width: 1rem;
+  height: 1rem;
+}
+.form-group--pickup select {
+  width: 100%;
+  padding: .8rem 1rem;
+  border: 1.5px solid var(--bege);
+  border-radius: var(--radius-md);
+  background: var(--white);
+  color: var(--text-dark);
+  font-family: inherit;
+  font-size: .95rem;
+}
 
 /* === MODAL PEDIDO === */
 .modal-overlay {

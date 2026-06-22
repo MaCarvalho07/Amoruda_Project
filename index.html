@@ -100,7 +100,7 @@
         <div class="hero-stats">
           <div class="stat"><strong>500+</strong><span>pedidos entregues</span></div>
           <div class="stat-divider"></div>
-          <div class="stat"><strong>8</strong><span>sabores exclusivos</span></div>
+          <div class="stat"><strong>10</strong><span>sabores exclusivos</span></div>
           <div class="stat-divider"></div>
           <div class="stat"><strong>100%</strong><span>artesanal</span></div>
         </div>
@@ -109,16 +109,16 @@
         <div class="cookie-showcase">
           <div class="cookie-card-main">
             <div class="cookie-emoji-big">🍪</div>
-            <p>Cookie Chocolate Belga</p>
-            <span>R$ 8,00</span>
+            <p>Tradicional</p>
+            <span>R$ 10,00</span>
           </div>
           <div class="cookie-card-mini top-right">
-            <div class="cookie-emoji-sm">🍪</div>
-            <p>Nutella Trufado</p>
+            <div class="cookie-emoji-sm">🍫</div>
+            <p>Chocolate</p>
           </div>
           <div class="cookie-card-mini bottom-left">
-            <div class="cookie-emoji-sm">🍪</div>
-            <p>Red Velvet</p>
+            <div class="cookie-emoji-sm">🥜</div>
+            <p>Nutella</p>
           </div>
         </div>
       </div>
@@ -159,55 +159,61 @@
         <div class="galeria-item galeria-large" data-index="0">
           <div class="galeria-placeholder">
             <span class="galeria-emoji">🍪</span>
-            <p>Cookie Chocolate Belga</p>
+            <p>Tradicional</p>
           </div>
         </div>
         <div class="galeria-item" data-index="1">
           <div class="galeria-placeholder">
             <span class="galeria-emoji">🍫</span>
-            <p>Red Velvet</p>
+            <p>Chocolate</p>
           </div>
         </div>
         <div class="galeria-item" data-index="2">
           <div class="galeria-placeholder">
-            <span class="galeria-emoji">🥜</span>
-            <p>Amendoim</p>
+            <span class="galeria-emoji">🧁</span>
+            <p>Brigadeiro</p>
           </div>
         </div>
         <div class="galeria-item galeria-tall" data-index="3">
           <div class="galeria-placeholder">
-            <span class="galeria-emoji">✨</span>
-            <p>Nutella Trufado</p>
+            <span class="galeria-emoji">🥛</span>
+            <p>Chocolate com Ninho</p>
           </div>
         </div>
         <div class="galeria-item" data-index="4">
           <div class="galeria-placeholder">
-            <span class="galeria-emoji">🍋</span>
-            <p>Limão Siciliano</p>
+            <span class="galeria-emoji">🥜</span>
+            <p>Nutella</p>
           </div>
         </div>
         <div class="galeria-item" data-index="5">
           <div class="galeria-placeholder">
-            <span class="galeria-emoji">🖤</span>
-            <p>Oreo</p>
+            <span class="galeria-emoji">🍮</span>
+            <p>Doce de Leite</p>
           </div>
         </div>
         <div class="galeria-item galeria-wide" data-index="6">
           <div class="galeria-placeholder">
-            <span class="galeria-emoji">🎪</span>
-            <p>Caixa Sortida</p>
+            <span class="galeria-emoji">🥛</span>
+            <p>Ninho</p>
           </div>
         </div>
         <div class="galeria-item" data-index="7">
           <div class="galeria-placeholder">
-            <span class="galeria-emoji">🔥</span>
-            <p>S'mores</p>
+            <span class="galeria-emoji">❤️</span>
+            <p>Red Velvet</p>
           </div>
         </div>
         <div class="galeria-item" data-index="8">
           <div class="galeria-placeholder">
-            <span class="galeria-emoji">🌿</span>
-            <p>Churros</p>
+            <span class="galeria-emoji">🍪</span>
+            <p>Oreo</p>
+          </div>
+        </div>
+        <div class="galeria-item" data-index="9">
+          <div class="galeria-placeholder">
+            <span class="galeria-emoji">🍫</span>
+            <p>Kinder</p>
           </div>
         </div>
       </div>
@@ -348,11 +354,16 @@
       <div class="footer-links">
         <h4>Sabores</h4>
         <ul>
-          <li><a href="#produtos">Chocolate Belga</a></li>
+          <li><a href="#produtos">Tradicional</a></li>
+          <li><a href="#produtos">Chocolate</a></li>
+          <li><a href="#produtos">Brigadeiro</a></li>
+          <li><a href="#produtos">Chocolate com Ninho</a></li>
+          <li><a href="#produtos">Nutella</a></li>
+          <li><a href="#produtos">Doce de Leite</a></li>
+          <li><a href="#produtos">Ninho</a></li>
           <li><a href="#produtos">Red Velvet</a></li>
-          <li><a href="#produtos">Nutella Trufado</a></li>
-          <li><a href="#produtos">Churros</a></li>
-          <li><a href="#produtos">S'mores</a></li>
+          <li><a href="#produtos">Kinder</a></li>
+          <li><a href="#produtos">Oreo</a></li>
           <li><a href="admin.html">Área Admin</a></li>
         </ul>
       </div>
@@ -379,6 +390,13 @@
       <ul class="cart-list" id="cart-list" aria-label="Itens no carrinho"></ul>
     </div>
     <div class="cart-footer" id="cart-footer" style="display:none">
+      <div class="cart-delivery-choice" id="cart-delivery-choice">
+        <p class="cart-delivery-label">Como deseja receber?</p>
+        <div class="cart-delivery-options">
+          <button type="button" class="delivery-option active" data-value="entrega">Entrega</button>
+          <button type="button" class="delivery-option" data-value="retirada">Retirada local</button>
+        </div>
+      </div>
       <div class="cart-totals">
         <div class="cart-subtotal">
           <span>Subtotal</span><span id="cart-subtotal">R$ 0,00</span>
@@ -413,11 +431,29 @@
             </div>
           </div>
           <div class="form-group">
+            <label>Tipo de pedido *</label>
+            <div class="radio-group">
+              <label class="radio-label"><input type="radio" name="tipo-pedido" value="entrega" checked /> Entrega</label>
+              <label class="radio-label"><input type="radio" name="tipo-pedido" value="retirada" /> Retirada no local</label>
+            </div>
+            <span class="form-error" id="err-tipo"></span>
+          </div>
+          <div class="form-group form-group--pickup" id="pickup-group" style="display:none">
+            <label for="inp-pickup">Local de Retirada *</label>
+            <select id="inp-pickup" name="pickupLocal">
+              <option value="">Escolha um ponto de retirada</option>
+              <option value="Loja Amoruda - Centro (Rua das Flores, 123)">Loja Amoruda - Centro (Rua das Flores, 123)</option>
+              <option value="Ponto de Retirada - Shopping (Av. Principal, 456)">Ponto de Retirada - Shopping (Av. Principal, 456)</option>
+              <option value="Ponto de Retirada - Mercado (Rua do Mercado, 78)">Ponto de Retirada - Mercado (Rua do Mercado, 78)</option>
+            </select>
+            <span class="form-error" id="err-pickup"></span>
+          </div>
+          <div class="form-group delivery-address-group">
             <label for="inp-end">Endereço (rua e número) *</label>
             <input type="text" id="inp-end" name="endereco" placeholder="Rua das Flores, 123" autocomplete="street-address" required />
             <span class="form-error" id="err-end"></span>
           </div>
-          <div class="form-row">
+          <div class="form-row delivery-address-group">
             <div class="form-group">
               <label for="inp-bairro">Bairro *</label>
               <input type="text" id="inp-bairro" name="bairro" placeholder="Centro" required />

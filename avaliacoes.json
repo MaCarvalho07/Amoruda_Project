@@ -3,64 +3,64 @@
     "id": 1,
     "nome": "Mariana Costa",
     "nota": 5,
-    "comentario": "Meu Deus, o Cookie Nutella Trufado é um pecado! Comprei pra experimentar e já fiz meu segundo pedido. A embalagem chegou linda e os cookies são perfeitos. A Amoruda conquistou meu coração!",
+    "comentario": "O Nutella é simplesmente perfeito. Textura cremosa e sabor intenso em cada mordida.",
     "data": "2024-12-10",
-    "produto": "Cookie Nutella Trufado"
+    "produto": "Nutella"
   },
   {
     "id": 2,
     "nome": "Rafael Mendes",
     "nota": 5,
-    "comentario": "Sou suspeito pra falar porque já virei cliente fiel. Os cookies chegam sempre no ponto certo, crocantes por fora e macios por dentro. O Red Velvet então é de outro mundo. Recomendo de olhos fechados!",
+    "comentario": "O Red Velvet é de outro mundo! Crocante por fora e aveludado por dentro.",
     "data": "2024-12-08",
-    "produto": "Cookie Red Velvet"
+    "produto": "Red Velvet"
   },
   {
     "id": 3,
     "nome": "Juliana Ferreira",
     "nota": 5,
-    "comentario": "Pedi para o aniversário da minha filha e foi um sucesso absoluto! As crianças amaram e os adultos pediram o contato da loja. Entrega rápida, embalagem caprichada e sabor incrível. Obrigada, Amoruda!",
+    "comentario": "O Brigadeiro conquistou todo mundo no aniversário. Doce na medida certa e muito cremoso.",
     "data": "2024-12-05",
-    "produto": "Caixa Sortida"
+    "produto": "Brigadeiro"
   },
   {
     "id": 4,
     "nome": "Pedro Alves",
     "nota": 5,
-    "comentario": "O Cookie Churros é simplesmente inacreditável. Aquela mistura de canela com doce de leite me fez viajar para a infância. Já indiquei para todo mundo do escritório e todos adoraram!",
+    "comentario": "O Oreo é um dos melhores que já provei. Crocante e com sabor equilibrado.",
     "data": "2024-12-03",
-    "produto": "Cookie Churros"
+    "produto": "Oreo"
   },
   {
     "id": 5,
     "nome": "Camila Santos",
     "nota": 5,
-    "comentario": "Descobri a Amoruda pelo Instagram e não me arrependo nem um pouquinho! Os cookies são artesanais de verdade, dá pra sentir o cuidado em cada detalhe. O de Limão Siciliano é delicado e perfeito para o verão.",
+    "comentario": "O Doce de Leite tem aquele toque caseiro que deixa tudo ainda mais gostoso.",
     "data": "2024-11-28",
-    "produto": "Cookie Limão Siciliano"
+    "produto": "Doce de Leite"
   },
   {
     "id": 6,
     "nome": "Lucas Barbosa",
     "nota": 4,
-    "comentario": "Cookies deliciosos, atendimento rápido pelo WhatsApp e entrega pontual. O único motivo do 4 estrelas é porque quero que vocês lancem mais sabores! O de amendoim é viciante demais.",
+    "comentario": "O Kinder é incrível, só queria que viesse ainda mais quentinho!",
     "data": "2024-11-25",
-    "produto": "Cookie Manteiga de Amendoim"
+    "produto": "Kinder"
   },
   {
     "id": 7,
     "nome": "Ana Lima",
     "nota": 5,
-    "comentario": "Fiz um pedido corporativo para uma reunião de clientes e todos elogiaram muito! Os cookies chegaram perfeitamente embalados com o nome dos convidados. Super recomendo para presentes empresariais!",
+    "comentario": "O Tradicional fez sucesso no pedido corporativo. Sabor caseiro e textura perfeita.",
     "data": "2024-11-20",
-    "produto": "Pedido Corporativo"
+    "produto": "Tradicional"
   },
   {
     "id": 8,
     "nome": "Thiago Rocha",
     "nota": 5,
-    "comentario": "O S'mores é simplesmente o melhor cookie que já comi na vida. O marshmallow tostado com aquele chocolate... parece mágica. Já pedi três vezes e sempre que abre a caixa, a família inteira aparece na cozinha!",
+    "comentario": "O Chocolate com Ninho é surpreendente. Leite Ninho cremoso com chocolate equilibrado.",
     "data": "2024-11-15",
-    "produto": "Cookie S'mores"
+    "produto": "Chocolate com Ninho"
   }
 ]

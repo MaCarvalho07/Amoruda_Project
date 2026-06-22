@@ -205,13 +205,12 @@ function salvarProduto() {
   const nome         = document.getElementById('prod-nome')?.value.trim();
   const categoria    = document.getElementById('prod-categoria')?.value;
   const preco        = parseFloat(document.getElementById('prod-preco')?.value);
-  const estoque      = parseInt(document.getElementById('prod-estoque')?.value);
   const descricao    = document.getElementById('prod-descricao')?.value.trim();
   const ingredientes = document.getElementById('prod-ingredientes')?.value.trim();
   const imagem       = document.getElementById('prod-imagem')?.value.trim();
   const destaque     = document.getElementById('prod-destaque')?.checked;
 
-  if (!nome || !categoria || isNaN(preco) || isNaN(estoque) || !descricao || !ingredientes) {
+  if (!nome || !categoria || isNaN(preco) || !descricao || !ingredientes) {
     showAdminToast('⚠️ Preencha todos os campos obrigatórios!');
     return;
   }
@@ -220,12 +219,12 @@ function salvarProduto() {
     /* Editar */
     const idx = Admin.produtos.findIndex(p => p.id === Admin.editandoProdId);
     if (idx !== -1) {
-      Admin.produtos[idx] = { ...Admin.produtos[idx], nome, categoria, preco, estoque, descricao, ingredientes, imagem, destaque };
+      Admin.produtos[idx] = { ...Admin.produtos[idx], nome, categoria, preco, descricao, ingredientes, imagem, destaque };
       showAdminToast('✅ Produto atualizado com sucesso!');
     }
   } else {
     /* Novo */
-    Admin.produtos.push({ id: proximoIdProduto(), nome, categoria, preco, estoque, descricao, ingredientes, imagem, destaque });
+    Admin.produtos.push({ id: proximoIdProduto(), nome, categoria, preco, descricao, ingredientes, imagem, destaque });
     showAdminToast('✅ Produto cadastrado com sucesso!');
   }
 
@@ -246,7 +245,6 @@ function editarProduto(id) {
   document.getElementById('prod-nome').value          = prod.nome;
   document.getElementById('prod-categoria').value     = prod.categoria;
   document.getElementById('prod-preco').value         = prod.preco;
-  document.getElementById('prod-estoque').value       = prod.estoque;
   document.getElementById('prod-descricao').value     = prod.descricao;
   document.getElementById('prod-ingredientes').value  = prod.ingredientes;
   document.getElementById('prod-imagem').value        = prod.imagem || '';
@@ -274,22 +272,17 @@ function renderTabelaProdutos() {
   tbody.innerHTML = '';
 
   if (!Admin.produtos.length) {
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#a08060;padding:2rem">Nenhum produto cadastrado.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#a08060;padding:2rem">Nenhum produto cadastrado.</td></tr>';
     return;
   }
 
   Admin.produtos.forEach(prod => {
-    let classeEstoque = 'estoque-ok';
-    if (prod.estoque === 0)     classeEstoque = 'estoque-zero';
-    else if (prod.estoque <= 5) classeEstoque = 'estoque-baixo';
-
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>#${prod.id}</td>
       <td class="td-nome">${prod.nome}</td>
       <td><span class="badge-cat badge-${prod.categoria}">${prod.categoria}</span></td>
       <td>R$ ${parseFloat(prod.preco).toFixed(2).replace('.', ',')}</td>
-      <td><span class="estoque-badge ${classeEstoque}">${prod.estoque}</span></td>
       <td>${prod.destaque ? '⭐' : '–'}</td>
       <td>
         <div class="td-acoes">
@@ -414,20 +407,14 @@ function renderResumo() {
   if (!cards) return;
 
   const totalProd  = Admin.produtos.length;
-  const totalEstoque = Admin.produtos.reduce((s, p) => s + p.estoque, 0);
   const mediaNotas = Admin.avaliacoes.length
     ? (Admin.avaliacoes.reduce((s, a) => s + a.nota, 0) / Admin.avaliacoes.length).toFixed(1)
     : 'N/A';
-  const prodEsgotados = Admin.produtos.filter(p => p.estoque === 0).length;
 
   cards.innerHTML = `
     <div class="resumo-card">
       <strong>${totalProd}</strong>
       <span>Produtos cadastrados</span>
-    </div>
-    <div class="resumo-card">
-      <strong>${totalEstoque}</strong>
-      <span>Unidades em estoque</span>
     </div>
     <div class="resumo-card">
       <strong>${Admin.avaliacoes.length}</strong>
@@ -437,28 +424,7 @@ function renderResumo() {
       <strong>${mediaNotas}</strong>
       <span>Média das notas ⭐</span>
     </div>
-    <div class="resumo-card">
-      <strong>${prodEsgotados}</strong>
-      <span>Produtos esgotados</span>
-    </div>
   `;
-
-  /* Lista de produtos por estoque */
-  const listaP = document.getElementById('resumo-produtos-lista');
-  if (listaP) {
-    const ordenados = [...Admin.produtos].sort((a, b) => a.estoque - b.estoque).slice(0, 8);
-    listaP.innerHTML = '<h3>📦 Estoque por Produto</h3>';
-    ordenados.forEach(p => {
-      let cls = 'estoque-ok';
-      if (p.estoque === 0) cls = 'estoque-zero';
-      else if (p.estoque <= 5) cls = 'estoque-baixo';
-      listaP.innerHTML += `
-        <div class="resumo-list-item">
-          <span>${p.nome}</span>
-          <span class="estoque-badge ${cls}">${p.estoque} un.</span>
-        </div>`;
-    });
-  }
 
   /* Últimas avaliações */
   const listaA = document.getElementById('resumo-av-lista');
@@ -519,17 +485,23 @@ function showAdminToast(msg) {
    ========================================== */
 function getProdutosExemplo() {
   return [
-    { id:1, nome:'Cookie Chocolate Belga', preco:8.00, estoque:20, descricao:'Cookie artesanal com gotas de chocolate belga.', ingredientes:'Farinha, manteiga, açúcar, ovos, chocolate belga', imagem:'', destaque:true, categoria:'classico' },
-    { id:2, nome:'Cookie Red Velvet', preco:9.50, estoque:15, descricao:'Massa aveludada vermelha com chocolate branco.', ingredientes:'Farinha, cacau, manteiga, açúcar, ovos, cream cheese', imagem:'', destaque:true, categoria:'especial' },
-    { id:3, nome:'Cookie Nutella Trufado', preco:11.00, estoque:3, descricao:'Recheio de Nutella trufada. Explosão de avelã.', ingredientes:'Farinha, manteiga, açúcar, ovos, Nutella', imagem:'', destaque:true, categoria:'premium' },
-    { id:4, nome:'Cookie Churros', preco:9.00, estoque:0, descricao:'Canela e doce de leite em formato cookie.', ingredientes:'Farinha, manteiga, açúcar, canela, doce de leite', imagem:'', destaque:false, categoria:'especial' },
+    { id:1, nome:'Tradicional', preco:10.00, descricao:'Cookie clássico com massa amanteigada e crocante nas bordas.', ingredientes:'Farinha, manteiga, açúcar, ovos, essência de baunilha, sal', imagem:'', destaque:true, categoria:'classico' },
+    { id:2, nome:'Chocolate', preco:10.00, descricao:'Cookie de chocolate ao leite com textura macia e sabor intenso.', ingredientes:'Farinha, cacau, manteiga, açúcar, ovos, chocolate ao leite, baunilha', imagem:'', destaque:true, categoria:'classico' },
+    { id:3, nome:'Brigadeiro', preco:13.00, descricao:'Cookie com brigadeiro cremoso e cobertura doce por cima.', ingredientes:'Farinha, manteiga, açúcar, ovos, leite condensado, cacau, chocolate', imagem:'', destaque:true, categoria:'especial' },
+    { id:4, nome:'Chocolate com Ninho', preco:13.00, descricao:'Cookie de chocolate com recheio de leite Ninho e sabor suave.', ingredientes:'Farinha, cacau, manteiga, açúcar, ovos, leite Ninho, chocolate', imagem:'', destaque:true, categoria:'premium' },
+    { id:5, nome:'Nutella', preco:14.00, descricao:'Cookie com recheio cremoso de Nutella e toque de avelã.', ingredientes:'Farinha, manteiga, açúcar, ovos, Nutella, cacau', imagem:'', destaque:true, categoria:'premium' },
+    { id:6, nome:'Doce de Leite', preco:13.00, descricao:'Cookie macio com doce de leite artesanal e cobertura dourada.', ingredientes:'Farinha, manteiga, açúcar, ovos, doce de leite, canela', imagem:'', destaque:false, categoria:'especial' },
+    { id:7, nome:'Ninho', preco:13.00, descricao:'Cookie leve com sabor de leite Ninho e textura aveludada.', ingredientes:'Farinha, manteiga, açúcar, ovos, leite Ninho, baunilha', imagem:'', destaque:false, categoria:'especial' },
+    { id:8, nome:'Red Velvet', preco:15.00, descricao:'Cookie aveludado com notas de cacau e chocolate branco.', ingredientes:'Farinha, cacau, manteiga, açúcar, ovos, corante natural, chocolate branco', imagem:'', destaque:true, categoria:'premium' },
+    { id:9, nome:'Kinder', preco:16.00, descricao:'Cookie inspirado em Kinder, cremoso e levemente crocante.', ingredientes:'Farinha, manteiga, açúcar, ovos, chocolate ao leite, avelãs', imagem:'', destaque:false, categoria:'premium' },
+    { id:10, nome:'Oreo', preco:15.00, descricao:'Cookie com pedaços de Oreo e toque de chocolate branco.', ingredientes:'Farinha, manteiga, açúcar, ovos, Oreo triturado, chocolate branco', imagem:'', destaque:false, categoria:'premium' }
   ];
 }
 
 function getAvaliacoesExemplo() {
   return [
-    { id:1, nome:'Mariana Costa', nota:5, comentario:'Simplesmente incríveis! O melhor cookie que já comi.', data:'2024-12-10', produto:'Cookie Nutella Trufado' },
-    { id:2, nome:'Rafael Mendes', nota:5, comentario:'Já sou cliente fiel. O Red Velvet é de outro mundo!', data:'2024-12-08', produto:'Cookie Red Velvet' },
+    { id:1, nome:'Mariana Costa', nota:5, comentario:'O Nutella é simplesmente perfeito. Textura cremosa e sabor intenso em cada mordida.', data:'2024-12-10', produto:'Nutella' },
+    { id:2, nome:'Rafael Mendes', nota:5, comentario:'O Red Velvet é de outro mundo! Crocante por fora e aveludado por dentro.', data:'2024-12-08', produto:'Red Velvet' },
   ];
 }
 

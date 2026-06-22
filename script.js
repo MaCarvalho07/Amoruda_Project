@@ -12,6 +12,7 @@ const State = {
   produtos:    [],
   avaliacoes:  [],
   carrinho:    [],
+  pedidoTipo:  'entrega',
   galeriaAtual: 0,
   filtroAtual: 'todos',
 };
@@ -165,13 +166,6 @@ const Carrinho = {
   /* Adicionar ou incrementar */
   adicionar(produto) {
     const item = State.carrinho.find(i => i.id === produto.id);
-    const estoqueTotal = this.getEstoqueDisponivel(produto.id);
-    const qtdNoCarrinho = item ? item.qtd : 0;
-
-    if (qtdNoCarrinho >= estoqueTotal) {
-      showToast(`⚠️ Estoque máximo atingido para "${produto.nome}"`, 'error');
-      return;
-    }
 
     if (item) {
       item.qtd++;
@@ -205,20 +199,13 @@ const Carrinho = {
     const item = State.carrinho.find(i => i.id === id);
     if (!item) return;
 
-    const estoque = this.getEstoqueDisponivel(id);
     const novaQtd = item.qtd + delta;
 
     if (novaQtd <= 0) { this.remover(id); return; }
-    if (novaQtd > estoque) { showToast('⚠️ Quantidade máxima de estoque atingida', 'error'); return; }
 
     item.qtd = novaQtd;
     this.render();
     this.atualizarContador();
-  },
-
-  getEstoqueDisponivel(id) {
-    const p = State.produtos.find(p => p.id === id);
-    return p ? p.estoque : 0;
   },
 
   total() {
@@ -308,6 +295,8 @@ function initCarrinho() {
   document.getElementById('cart-close')?.addEventListener('click', () => Carrinho.fechar());
   document.getElementById('cart-overlay')?.addEventListener('click', () => Carrinho.fechar());
 
+  initDeliverySelection();
+
   /* Finalizar pedido abre modal */
   document.getElementById('btn-finalizar')?.addEventListener('click', () => {
     Carrinho.fechar();
@@ -315,10 +304,44 @@ function initCarrinho() {
   });
 }
 
+function initDeliverySelection() {
+  const cartButtons = document.querySelectorAll('.delivery-option');
+  const formRadios = document.querySelectorAll('input[name="tipo-pedido"]');
+
+  function setTipo(tipo) {
+    State.pedidoTipo = tipo;
+    cartButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.value === tipo));
+    formRadios.forEach(radio => { radio.checked = radio.value === tipo; });
+    updatePedidoForm();
+  }
+
+  cartButtons.forEach(btn => {
+    btn.addEventListener('click', () => setTipo(btn.dataset.value));
+  });
+
+  formRadios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      if (radio.checked) setTipo(radio.value);
+    });
+  });
+
+  setTipo(State.pedidoTipo || 'entrega');
+}
+
+function updatePedidoForm() {
+  const pickupGroup = document.getElementById('pickup-group');
+  const deliveryGroups = document.querySelectorAll('.delivery-address-group');
+  const tipo = State.pedidoTipo || 'entrega';
+
+  if (pickupGroup) pickupGroup.style.display = tipo === 'retirada' ? 'block' : 'none';
+  deliveryGroups.forEach(el => { el.style.display = tipo === 'entrega' ? '' : 'none'; });
+}
+
 /* ==========================================
    MODAL DE PEDIDO (formulário)
    ========================================== */
 function abrirModal() {
+  updatePedidoForm();
   document.getElementById('modal-overlay')?.classList.add('open');
   document.getElementById('modal-overlay')?.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
@@ -361,9 +384,29 @@ function validarFormulario() {
   }
 
   erro('inp-nome',    'err-nome',   'Informe seu nome completo.');
-  erro('inp-end',     'err-end',    'Informe o endereço de entrega.');
-  erro('inp-bairro',  'err-bairro', 'Informe o bairro.');
-  erro('inp-cidade',  'err-cidade', 'Informe a cidade.');
+
+  const tipo = State.pedidoTipo || 'entrega';
+  if (tipo === 'entrega') {
+    erro('inp-end',     'err-end',    'Informe o endereço de entrega.');
+    erro('inp-bairro',  'err-bairro', 'Informe o bairro.');
+    erro('inp-cidade',  'err-cidade', 'Informe a cidade.');
+    const pickup = document.getElementById('inp-pickup');
+    const errPickup = document.getElementById('err-pickup');
+    if (pickup && errPickup) {
+      pickup.classList.remove('invalid');
+      errPickup.textContent = '';
+    }
+  } else {
+    erro('inp-pickup',  'err-pickup', 'Selecione o local de retirada.');
+    ['inp-end', 'inp-bairro', 'inp-cidade'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove('invalid');
+    });
+    ['err-end', 'err-bairro', 'err-cidade'].forEach(id => {
+      const errEl = document.getElementById(id);
+      if (errEl) errEl.textContent = '';
+    });
+  }
 
   /* Validação de telefone */
   const tel = document.getElementById('inp-tel');
@@ -381,7 +424,7 @@ function validarFormulario() {
   }
 
   /* Remove erro ao digitar */
-  ['inp-nome','inp-tel','inp-end','inp-bairro','inp-cidade'].forEach(id => {
+  ['inp-nome','inp-tel','inp-end','inp-bairro','inp-cidade','inp-pickup'].forEach(id => {
     document.getElementById(id)?.addEventListener('input', function () {
       this.classList.remove('invalid');
     }, { once: false });
@@ -394,6 +437,7 @@ function validarFormulario() {
 function enviarPedidoWhatsApp() {
   const nome    = document.getElementById('inp-nome')?.value.trim();
   const tel     = document.getElementById('inp-tel')?.value.trim();
+  const pickup  = document.getElementById('inp-pickup')?.value.trim();
   const end     = document.getElementById('inp-end')?.value.trim();
   const bairro  = document.getElementById('inp-bairro')?.value.trim();
   const cidade  = document.getElementById('inp-cidade')?.value.trim();
@@ -405,6 +449,10 @@ function enviarPedidoWhatsApp() {
   });
 
   const total = moeda(Carrinho.total());
+  const tipo = State.pedidoTipo || 'entrega';
+  const entregaTexto = tipo === 'retirada'
+    ? `Retirada em: ${pickup}`
+    : `Endereço de Entrega: ${end}\nBairro: ${bairro}\nCidade: ${cidade}`;
 
   const msg = ` PEDIDO AMORUDA COOKIES
 
@@ -415,12 +463,9 @@ Itens do Pedido:
 ${linhasProdutos}
 Total: ${total}
 
-Endereço de Entrega: ${end}
-Bairro: ${bairro}
-Cidade: ${cidade}
+${entregaTexto}
 
-${obs ? `Observações:\n${obs}\n` : ''}
-Pedido realizado pelo site Amoruda Cookies`;
+${obs ? `Observações:\n${obs}\n` : ''}Pedido realizado pelo site Amoruda Cookies`;
 
   const url = `https://wa.me/${WHATSAPP_LOJA}?text=${encodeURIComponent(msg)}`;
   window.open(url, '_blank', 'noopener');
@@ -468,12 +513,6 @@ function criarCardProduto(prod, idx) {
   card.setAttribute('data-categoria', prod.categoria);
 
   const emoji = EMOJIS_PRODUTO[idx % EMOJIS_PRODUTO.length];
-  const esgotado = prod.estoque === 0;
-
-  let classeEstoque = 'estoque-ok';
-  let textoEstoque  = `✅ ${prod.estoque} disponíveis`;
-  if (prod.estoque === 0) { classeEstoque = 'estoque-zero'; textoEstoque = '❌ Esgotado'; }
-  else if (prod.estoque <= 5) { classeEstoque = 'estoque-baixo'; textoEstoque = `⚠️ Últimas ${prod.estoque} unidades`; }
 
   card.innerHTML = `
     <div class="produto-img-wrap" aria-hidden="true">
@@ -493,22 +532,19 @@ function criarCardProduto(prod, idx) {
         <strong>🌾 Ingredientes:</strong>
         ${prod.ingredientes}
       </div>
-      <span class="produto-estoque ${classeEstoque}">${textoEstoque}</span>
     </div>
     <div class="produto-footer">
       <div class="produto-preco">
         ${moeda(prod.preco)}
         <span>por unidade</span>
       </div>
-      <button class="btn-add" data-id="${prod.id}" ${esgotado ? 'disabled aria-disabled="true"' : ''}>
-        ${esgotado ? 'Esgotado' : '+ Adicionar'}
-      </button>
+      <button class="btn-add" data-id="${prod.id}">+ Adicionar</button>
     </div>
   `;
 
   /* Evento do botão adicionar */
   const btn = card.querySelector('.btn-add');
-  if (btn && !esgotado) {
+  if (btn) {
     btn.addEventListener('click', () => Carrinho.adicionar(prod));
   }
 
@@ -567,15 +603,16 @@ function renderAvaliacoes() {
    GALERIA & LIGHTBOX
    ========================================== */
 const galeriaData = [
-  { emoji: '🍪', nome: 'Cookie Chocolate Belga' },
-  { emoji: '🍫', nome: 'Cookie Red Velvet' },
-  { emoji: '🥜', nome: 'Cookie Amendoim' },
-  { emoji: '✨', nome: 'Cookie Nutella Trufado' },
-  { emoji: '🍋', nome: 'Cookie Limão Siciliano' },
-  { emoji: '🖤', nome: 'Cookie Oreo' },
-  { emoji: '🎪', nome: 'Caixa Sortida Premium' },
-  { emoji: '🔥', nome: 'Cookie S\'mores' },
-  { emoji: '🌿', nome: 'Cookie Churros' },
+  { emoji: '🍪', nome: 'Tradicional' },
+  { emoji: '🍫', nome: 'Chocolate' },
+  { emoji: '🧁', nome: 'Brigadeiro' },
+  { emoji: '🥛', nome: 'Chocolate com Ninho' },
+  { emoji: '🥜', nome: 'Nutella' },
+  { emoji: '🍮', nome: 'Doce de Leite' },
+  { emoji: '🥛', nome: 'Ninho' },
+  { emoji: '❤️', nome: 'Red Velvet' },
+  { emoji: '🍪', nome: 'Oreo' },
+  { emoji: '🍫', nome: 'Kinder' },
 ];
 
 function initGaleria() {
@@ -724,25 +761,27 @@ async function carregarDados() {
 /* Fallback: dados embutidos caso o fetch falhe (ex.: abrir .html local sem servidor) */
 function getDadosExemploProutos() {
   return [
-    { id:1, nome:'Cookie Chocolate Belga', preco:8.00, estoque:20, descricao:'Cookie artesanal com gotas de chocolate belga 54% cacau, assado no ponto certo.', ingredientes:'Farinha, manteiga, açúcar demerara, ovos, chocolate belga 54%', imagem:'', destaque:true, categoria:'classico' },
-    { id:2, nome:'Cookie Red Velvet', preco:9.50, estoque:15, descricao:'Massa aveludada vermelha com gotas de chocolate branco derretendo por dentro.', ingredientes:'Farinha, cacau, manteiga, açúcar, ovos, cream cheese, chocolate branco', imagem:'', destaque:true, categoria:'especial' },
-    { id:3, nome:'Cookie Manteiga de Amendoim', preco:9.00, estoque:18, descricao:'Recheio cremoso de manteiga de amendoim artesanal com sabor intenso.', ingredientes:'Farinha, manteiga de amendoim, açúcar mascavo, ovos', imagem:'', destaque:false, categoria:'classico' },
-    { id:4, nome:'Cookie Nutella Trufado', preco:11.00, estoque:12, descricao:'Recheio surpresa de Nutella trufada. Uma explosão de avelã e chocolate.', ingredientes:'Farinha, manteiga, açúcar, ovos, cacau, Nutella, avelãs', imagem:'', destaque:true, categoria:'premium' },
-    { id:5, nome:'Cookie Limão Siciliano', preco:8.50, estoque:22, descricao:'Massa suave com raspas de limão siciliano e glacê cítrico equilibrado.', ingredientes:'Farinha, manteiga, açúcar, ovos, limão siciliano', imagem:'', destaque:false, categoria:'especial' },
-    { id:6, nome:'Cookie Oreo', preco:10.00, estoque:16, descricao:'Massa cravejada de pedaços crocantes de Oreo com cream cheese e chocolate branco.', ingredientes:'Farinha, manteiga, Oreo triturado, cream cheese, chocolate branco', imagem:'', destaque:false, categoria:'premium' },
-    { id:7, nome:'Cookie Churros', preco:9.00, estoque:14, descricao:'Canela + doce de leite artesanal em formato cookie. Uma fusão brasileira irresistível.', ingredientes:'Farinha, manteiga, açúcar, canela, doce de leite', imagem:'', destaque:true, categoria:'especial' },
-    { id:8, nome:'Cookie S\'mores', preco:10.50, estoque:10, descricao:'Marshmallow tostado com chocolate ao leite. Uma aventura de sabores em cada pedaço.', ingredientes:'Farinha, mel, canela, manteiga, marshmallow, chocolate ao leite', imagem:'', destaque:false, categoria:'premium' },
+    { id:1, nome:'Tradicional', preco:10.00, descricao:'Cookie clássico com massa amanteigada e crocante nas bordas.', ingredientes:'Farinha, manteiga, açúcar, ovos, essência de baunilha, sal', imagem:'', destaque:true, categoria:'classico' },
+    { id:2, nome:'Chocolate', preco:10.00, descricao:'Cookie de chocolate ao leite com textura macia e sabor intenso.', ingredientes:'Farinha, cacau, manteiga, açúcar, ovos, chocolate ao leite, baunilha', imagem:'', destaque:true, categoria:'classico' },
+    { id:3, nome:'Brigadeiro', preco:13.00, descricao:'Cookie com brigadeiro cremoso e cobertura doce por cima.', ingredientes:'Farinha, manteiga, açúcar, ovos, leite condensado, cacau, chocolate', imagem:'', destaque:true, categoria:'especial' },
+    { id:4, nome:'Chocolate com Ninho', preco:13.00, descricao:'Cookie de chocolate com recheio de leite Ninho e sabor suave.', ingredientes:'Farinha, cacau, manteiga, açúcar, ovos, leite Ninho, chocolate', imagem:'', destaque:true, categoria:'premium' },
+    { id:5, nome:'Nutella', preco:14.00, descricao:'Cookie com recheio cremoso de Nutella e toque de avelã.', ingredientes:'Farinha, manteiga, açúcar, ovos, Nutella, cacau', imagem:'', destaque:true, categoria:'premium' },
+    { id:6, nome:'Doce de Leite', preco:13.00, descricao:'Cookie macio com doce de leite artesanal e cobertura dourada.', ingredientes:'Farinha, manteiga, açúcar, ovos, doce de leite, canela', imagem:'', destaque:false, categoria:'especial' },
+    { id:7, nome:'Ninho', preco:13.00, descricao:'Cookie leve com sabor de leite Ninho e textura aveludada.', ingredientes:'Farinha, manteiga, açúcar, ovos, leite Ninho, baunilha', imagem:'', destaque:false, categoria:'especial' },
+    { id:8, nome:'Red Velvet', preco:15.00, descricao:'Cookie aveludado com notas de cacau e chocolate branco.', ingredientes:'Farinha, cacau, manteiga, açúcar, ovos, corante natural, chocolate branco', imagem:'', destaque:true, categoria:'premium' },
+    { id:9, nome:'Kinder', preco:16.00, descricao:'Cookie inspirado em Kinder, cremoso e levemente crocante.', ingredientes:'Farinha, manteiga, açúcar, ovos, chocolate ao leite, avelãs', imagem:'', destaque:false, categoria:'premium' },
+    { id:10, nome:'Oreo', preco:15.00, descricao:'Cookie com pedaços de Oreo e toque de chocolate branco.', ingredientes:'Farinha, manteiga, açúcar, ovos, Oreo triturado, chocolate branco', imagem:'', destaque:false, categoria:'premium' }
   ];
 }
 
 function getDadosExemploAvaliacoes() {
   return [
-    { id:1, nome:'Mariana Costa', nota:5, comentario:'Meu Deus, o Cookie Nutella Trufado é um pecado! Já fiz meu segundo pedido. Amoruda conquistou meu coração!', data:'2024-12-10', produto:'Cookie Nutella Trufado' },
-    { id:2, nome:'Rafael Mendes', nota:5, comentario:'Sou suspeito porque já virei cliente fiel. O Red Velvet então é de outro mundo. Recomendo de olhos fechados!', data:'2024-12-08', produto:'Cookie Red Velvet' },
-    { id:3, nome:'Juliana Ferreira', nota:5, comentario:'Pedi para o aniversário da minha filha e foi um sucesso! Entrega rápida, embalagem caprichada e sabor incrível.', data:'2024-12-05', produto:'Caixa Sortida' },
-    { id:4, nome:'Pedro Alves', nota:5, comentario:'O Cookie Churros é simplesmente inacreditável. Aquela mistura de canela com doce de leite me fez viajar para a infância!', data:'2024-12-03', produto:'Cookie Churros' },
-    { id:5, nome:'Camila Santos', nota:5, comentario:'Descobri a Amoruda pelo Instagram e não me arrependo! Os cookies são artesanais de verdade.', data:'2024-11-28', produto:'Cookie Limão Siciliano' },
-    { id:6, nome:'Lucas Barbosa', nota:4, comentario:'Cookies deliciosos, atendimento rápido. O único motivo do 4 estrelas é porque quero mais sabores!', data:'2024-11-25', produto:'Cookie Amendoim' },
+    { id:1, nome:'Mariana Costa', nota:5, comentario:'O Nutella é simplesmente perfeito. Textura cremosa e sabor intenso em cada mordida.', data:'2024-12-10', produto:'Nutella' },
+    { id:2, nome:'Rafael Mendes', nota:5, comentario:'O Red Velvet é de outro mundo! Crocante por fora e aveludado por dentro.', data:'2024-12-08', produto:'Red Velvet' },
+    { id:3, nome:'Juliana Ferreira', nota:5, comentario:'O Brigadeiro conquistou todo mundo no aniversário. Doce na medida certa e muito cremoso.', data:'2024-12-05', produto:'Brigadeiro' },
+    { id:4, nome:'Pedro Alves', nota:5, comentario:'O Oreo é um dos melhores que já provei. Crocante e com sabor equilibrado.', data:'2024-12-03', produto:'Oreo' },
+    { id:5, nome:'Camila Santos', nota:5, comentario:'O Doce de Leite tem aquele toque caseiro que deixa tudo ainda mais gostoso.', data:'2024-11-28', produto:'Doce de Leite' },
+    { id:6, nome:'Lucas Barbosa', nota:4, comentario:'O Kinder é incrível, só queria que viesse ainda mais quentinho!', data:'2024-11-25', produto:'Kinder' },
   ];
 }
 

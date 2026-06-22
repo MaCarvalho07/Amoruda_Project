@@ -314,17 +314,6 @@ textarea { resize: vertical; }
 .badge-especial  { background: #fff3e0; color: #e65100; }
 .badge-premium   { background: #fce4ec; color: #c2185b; }
 
-.estoque-badge {
-  display: inline-block;
-  padding: .2rem .55rem;
-  border-radius: 999px;
-  font-size: .75rem;
-  font-weight: 700;
-}
-.estoque-ok    { background: #e8f5e9; color: #2e7d32; }
-.estoque-baixo { background: #fff3e0; color: #e65100; }
-.estoque-zero  { background: #ffebee; color: #c62828; }
-
 /* Resumo */
 .resumo-cards {
   display: grid;
